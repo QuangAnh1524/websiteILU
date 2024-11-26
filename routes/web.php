@@ -19,11 +19,13 @@ Route::get('/', function () {
 
 Route::get('/adminDashboard', function () {
     return view('admin.adminDashboard');
-});
+})->name('adminDashboard');
 
 Route::get('/websiteClient', function () {
     return view('client.layouts.app');
 });
+
+Route::resource('/products', \App\Http\Controllers\Admin\Product::class);
 
 Auth::routes();
 

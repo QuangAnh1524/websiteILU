@@ -1,17 +1,2 @@
-@import 'bootstrap/dist/css/bootstrap.min.css';
+@import "bootstrap/dist/css/bootstrap.min.css";
 
-/* Replace -ms-high-contrast with modern forced-colors */
-@media (forced-colors: active) {
-    .dashboard-element {
-        forced-color-adjust: auto;
-    }
-
-    /* For specific elements that need custom colors */
-    .custom-element {
-        forced-color-adjust: none;
-        background-color: Canvas;
-        color: CanvasText;
-    }
-}
-
-/* Your other styles */

@@ -3,7 +3,7 @@
         <div class="sidebar-header">
             <div class="d-flex justify-content-between">
                 <div class="logo">
-                <h3>ADMIN</h3>
+                    <h3>ADMIN</h3>
                 </div>
                 <div class="toggler">
                     <a href="#" class="sidebar-hide d-xl-none d-block"><i class="bi bi-x bi-middle"></i></a>
@@ -12,324 +12,120 @@
         </div>
         <div class="sidebar-menu">
             <ul class="menu">
+                <!-- Dashboard -->
                 <li class="sidebar-title">Menu</li>
-
-                <li class="sidebar-item active ">
-                    <a href="index.html" class='sidebar-link'>
+                <li class="sidebar-item {{ Request::routeIs('adminDashboard') ? 'active' : '' }}">
+                    <a href="{{ route('adminDashboard') }}" class='sidebar-link'>
                         <i class="bi bi-grid-fill"></i>
                         <span>Dashboard</span>
                     </a>
                 </li>
 
-                <li class="sidebar-item  has-sub">
+                <!-- Quản lý Sản phẩm -->
+                <li class="sidebar-item has-sub {{ Request::routeIs('products.*') ? 'active' : '' }}">
                     <a href="#" class='sidebar-link'>
-                        <i class="bi bi-stack"></i>
-                        <span>Components</span>
+                        <i class="bi bi-box"></i>
+                        <span>Quản lý Sản phẩm</span>
                     </a>
-                    <ul class="submenu ">
-                        <li class="submenu-item ">
-                            <a href="component-alert.html">Alert</a>
+                    <ul class="submenu" style="{{ Request::routeIs('products.*') ? 'display: block;' : '' }}">
+                        <li class="submenu-item {{ Request::routeIs('products.index') ? 'active' : '' }}">
+                            <a href="{{ route('products.index') }}">Danh sách sản phẩm</a>
                         </li>
-                        <li class="submenu-item ">
-                            <a href="component-badge.html">Badge</a>
+                        <li class="submenu-item {{ Request::url() == url('add-product.html') ? 'active' : '' }}">
+                            <a href="add-product.html">Thêm sản phẩm</a>
                         </li>
-                        <li class="submenu-item ">
-                            <a href="component-breadcrumb.html">Breadcrumb</a>
-                        </li>
-                        <li class="submenu-item ">
-                            <a href="component-button.html">Button</a>
-                        </li>
-                        <li class="submenu-item ">
-                            <a href="component-card.html">Card</a>
-                        </li>
-                        <li class="submenu-item ">
-                            <a href="component-carousel.html">Carousel</a>
-                        </li>
-                        <li class="submenu-item ">
-                            <a href="component-dropdown.html">Dropdown</a>
-                        </li>
-                        <li class="submenu-item ">
-                            <a href="component-list-group.html">List Group</a>
-                        </li>
-                        <li class="submenu-item ">
-                            <a href="component-modal.html">Modal</a>
-                        </li>
-                        <li class="submenu-item ">
-                            <a href="component-navs.html">Navs</a>
-                        </li>
-                        <li class="submenu-item ">
-                            <a href="component-pagination.html">Pagination</a>
-                        </li>
-                        <li class="submenu-item ">
-                            <a href="component-progress.html">Progress</a>
-                        </li>
-                        <li class="submenu-item ">
-                            <a href="component-spinner.html">Spinner</a>
-                        </li>
-                        <li class="submenu-item ">
-                            <a href="component-tooltip.html">Tooltip</a>
+                        <li class="submenu-item {{ Request::url() == url('categories.html') ? 'active' : '' }}">
+                            <a href="categories.html">Danh mục</a>
                         </li>
                     </ul>
                 </li>
 
-                <li class="sidebar-item  has-sub">
-                    <a href="#" class='sidebar-link'>
-                        <i class="bi bi-collection-fill"></i>
-                        <span>Extra Components</span>
+                <!-- Quản lý Nhân Viên -->
+                <li class="sidebar-item has-sub {{ Request::url() == url('employees.html') ? 'active' : '' }}">
+                    <a href="employees.html" class='sidebar-link'>
+                        <i class="bi bi-person-badge-fill"></i>
+                        <span>Quản lý Nhân Viên</span>
                     </a>
-                    <ul class="submenu ">
-                        <li class="submenu-item ">
-                            <a href="extra-component-avatar.html">Avatar</a>
+                    <ul class="submenu">
+                        <li class="submenu-item {{ Request::url() == url('employee-list.html') ? 'active' : '' }}">
+                            <a href="employee-list.html">Danh sách nhân viên</a>
                         </li>
-                        <li class="submenu-item ">
-                            <a href="extra-component-sweetalert.html">Sweet Alert</a>
+                        <li class="submenu-item {{ Request::url() == url('employee-create.html') ? 'active' : '' }}">
+                            <a href="employee-create.html">Thêm nhân viên</a>
                         </li>
-                        <li class="submenu-item ">
-                            <a href="extra-component-toastify.html">Toastify</a>
+                        <li class="submenu-item {{ Request::url() == url('employee-edit.html') ? 'active' : '' }}">
+                            <a href="employee-edit.html">Cập nhật thông tin</a>
                         </li>
-                        <li class="submenu-item ">
-                            <a href="extra-component-rating.html">Rating</a>
-                        </li>
-                        <li class="submenu-item ">
-                            <a href="extra-component-divider.html">Divider</a>
+                        <li class="submenu-item {{ Request::url() == url('employee-delete.html') ? 'active' : '' }}">
+                            <a href="employee-delete.html">Chỉnh sửa trạng thái nhân viên</a>
                         </li>
                     </ul>
                 </li>
 
-                <li class="sidebar-item  has-sub">
+                <!-- Quản lý Khách Hàng -->
+                <li class="sidebar-item has-sub {{ Request::url() == url('user-list.html') ? 'active' : '' }}">
                     <a href="#" class='sidebar-link'>
-                        <i class="bi bi-grid-1x2-fill"></i>
-                        <span>Layouts</span>
+                        <i class="bi bi-person-fill"></i>
+                        <span>Quản lý Khách hàng</span>
                     </a>
-                    <ul class="submenu ">
-                        <li class="submenu-item ">
-                            <a href="layout-default.html">Default Layout</a>
+                    <ul class="submenu">
+                        <li class="submenu-item {{ Request::url() == url('user-list.html') ? 'active' : '' }}">
+                            <a href="user-list.html">Danh sách</a>
                         </li>
-                        <li class="submenu-item ">
-                            <a href="layout-vertical-1-column.html">1 Column</a>
-                        </li>
-                        <li class="submenu-item ">
-                            <a href="layout-vertical-navbar.html">Vertical with Navbar</a>
-                        </li>
-                        <li class="submenu-item ">
-                            <a href="layout-horizontal.html">Horizontal Menu</a>
+                        <li class="submenu-item {{ Request::url() == url('user-edit.html') ? 'active' : '' }}">
+                            <a href="user-edit.html">Cập nhật trạng thái</a>
                         </li>
                     </ul>
                 </li>
 
-                <li class="sidebar-title">Forms &amp; Tables</li>
-
-                <li class="sidebar-item  has-sub">
+                <!-- Quản lý Khuyến mãi -->
+                <li class="sidebar-item has-sub {{ Request::url() == url('promotion-list.html') ? 'active' : '' }}">
                     <a href="#" class='sidebar-link'>
-                        <i class="bi bi-hexagon-fill"></i>
-                        <span>Form Elements</span>
+                        <i class="bi bi-percent"></i>
+                        <span>Quản lý Khuyến mãi</span>
                     </a>
-                    <ul class="submenu ">
-                        <li class="submenu-item ">
-                            <a href="form-element-input.html">Input</a>
+                    <ul class="submenu">
+                        <li class="submenu-item {{ Request::url() == url('promotion-list.html') ? 'active' : '' }}">
+                            <a href="promotion-list.html">Danh sách khuyến mãi</a>
                         </li>
-                        <li class="submenu-item ">
-                            <a href="form-element-input-group.html">Input Group</a>
+                        <li class="submenu-item {{ Request::url() == url('promotion-create.html') ? 'active' : '' }}">
+                            <a href="promotion-create.html">Thêm khuyến mãi</a>
                         </li>
-                        <li class="submenu-item ">
-                            <a href="form-element-select.html">Select</a>
+                        <li class="submenu-item {{ Request::url() == url('promotion-edit.html') ? 'active' : '' }}">
+                            <a href="promotion-edit.html">Chỉnh sửa khuyến mãi</a>
                         </li>
-                        <li class="submenu-item ">
-                            <a href="form-element-radio.html">Radio</a>
-                        </li>
-                        <li class="submenu-item ">
-                            <a href="form-element-checkbox.html">Checkbox</a>
-                        </li>
-                        <li class="submenu-item ">
-                            <a href="form-element-textarea.html">Textarea</a>
+                        <li class="submenu-item {{ Request::url() == url('promotion-delete.html') ? 'active' : '' }}">
+                            <a href="promotion-delete.html">Cập nhật trạng thái khuyến mãi</a>
                         </li>
                     </ul>
                 </li>
 
-                <li class="sidebar-item  ">
-                    <a href="form-layout.html" class='sidebar-link'>
-                        <i class="bi bi-file-earmark-medical-fill"></i>
-                        <span>Form Layout</span>
-                    </a>
-                </li>
-
-                <li class="sidebar-item  has-sub">
-                    <a href="#" class='sidebar-link'>
-                        <i class="bi bi-pen-fill"></i>
-                        <span>Form Editor</span>
-                    </a>
-                    <ul class="submenu ">
-                        <li class="submenu-item ">
-                            <a href="form-editor-quill.html">Quill</a>
-                        </li>
-                        <li class="submenu-item ">
-                            <a href="form-editor-ckeditor.html">CKEditor</a>
-                        </li>
-                        <li class="submenu-item ">
-                            <a href="form-editor-summernote.html">Summernote</a>
-                        </li>
-                        <li class="submenu-item ">
-                            <a href="form-editor-tinymce.html">TinyMCE</a>
-                        </li>
-                    </ul>
-                </li>
-
-                <li class="sidebar-item  ">
-                    <a href="table.html" class='sidebar-link'>
-                        <i class="bi bi-grid-1x2-fill"></i>
-                        <span>Table</span>
-                    </a>
-                </li>
-
-                <li class="sidebar-item  ">
-                    <a href="table-datatable.html" class='sidebar-link'>
-                        <i class="bi bi-file-earmark-spreadsheet-fill"></i>
-                        <span>Datatable</span>
-                    </a>
-                </li>
-
-                <li class="sidebar-title">Extra UI</li>
-
-                <li class="sidebar-item  has-sub">
-                    <a href="#" class='sidebar-link'>
-                        <i class="bi bi-pentagon-fill"></i>
-                        <span>Widgets</span>
-                    </a>
-                    <ul class="submenu ">
-                        <li class="submenu-item ">
-                            <a href="ui-widgets-chatbox.html">Chatbox</a>
-                        </li>
-                        <li class="submenu-item ">
-                            <a href="ui-widgets-pricing.html">Pricing</a>
-                        </li>
-                        <li class="submenu-item ">
-                            <a href="ui-widgets-todolist.html">To-do List</a>
-                        </li>
-                    </ul>
-                </li>
-
-                <li class="sidebar-item  has-sub">
-                    <a href="#" class='sidebar-link'>
-                        <i class="bi bi-egg-fill"></i>
-                        <span>Icons</span>
-                    </a>
-                    <ul class="submenu ">
-                        <li class="submenu-item ">
-                            <a href="ui-icons-bootstrap-icons.html">Bootstrap Icons </a>
-                        </li>
-                        <li class="submenu-item ">
-                            <a href="ui-icons-fontawesome.html">Fontawesome</a>
-                        </li>
-                        <li class="submenu-item ">
-                            <a href="ui-icons-dripicons.html">Dripicons</a>
-                        </li>
-                    </ul>
-                </li>
-
-                <li class="sidebar-item  has-sub">
-                    <a href="#" class='sidebar-link'>
+                <!-- Báo cáo -->
+                <li class="sidebar-item {{ Request::url() == url('reports.html') ? 'active' : '' }}">
+                    <a href="reports.html" class='sidebar-link'>
                         <i class="bi bi-bar-chart-fill"></i>
-                        <span>Charts</span>
-                    </a>
-                    <ul class="submenu ">
-                        <li class="submenu-item ">
-                            <a href="ui-chart-chartjs.html">ChartJS</a>
-                        </li>
-                        <li class="submenu-item ">
-                            <a href="ui-chart-apexcharts.html">Apexcharts</a>
-                        </li>
-                    </ul>
-                </li>
-
-                <li class="sidebar-item  ">
-                    <a href="ui-file-uploader.html" class='sidebar-link'>
-                        <i class="bi bi-cloud-arrow-up-fill"></i>
-                        <span>File Uploader</span>
+                        <span>Thống kê</span>
                     </a>
                 </li>
 
-                <li class="sidebar-item  has-sub">
-                    <a href="#" class='sidebar-link'>
-                        <i class="bi bi-map-fill"></i>
-                        <span>Maps</span>
-                    </a>
-                    <ul class="submenu ">
-                        <li class="submenu-item ">
-                            <a href="ui-map-google-map.html">Google Map</a>
-                        </li>
-                        <li class="submenu-item ">
-                            <a href="ui-map-jsvectormap.html">JS Vector Map</a>
-                        </li>
-                    </ul>
-                </li>
-
-                <li class="sidebar-title">Pages</li>
-
-                <li class="sidebar-item  ">
-                    <a href="application-email.html" class='sidebar-link'>
-                        <i class="bi bi-envelope-fill"></i>
-                        <span>Email Application</span>
-                    </a>
-                </li>
-
-                <li class="sidebar-item  ">
-                    <a href="application-chat.html" class='sidebar-link'>
-                        <i class="bi bi-chat-dots-fill"></i>
-                        <span>Chat Application</span>
-                    </a>
-                </li>
-
-                <li class="sidebar-item  ">
-                    <a href="application-gallery.html" class='sidebar-link'>
-                        <i class="bi bi-image-fill"></i>
-                        <span>Photo Gallery</span>
-                    </a>
-                </li>
-
-                <li class="sidebar-item  ">
-                    <a href="application-checkout.html" class='sidebar-link'>
-                        <i class="bi bi-basket-fill"></i>
-                        <span>Checkout Page</span>
-                    </a>
-                </li>
-
-                <li class="sidebar-item  has-sub">
+                <!-- Authentication -->
+                <li class="sidebar-item has-sub">
                     <a href="#" class='sidebar-link'>
                         <i class="bi bi-person-badge-fill"></i>
                         <span>Authentication</span>
                     </a>
-                    <ul class="submenu ">
-                        <li class="submenu-item ">
+                    <ul class="submenu">
+                        <li class="submenu-item">
                             <a href="auth-login.html">Login</a>
                         </li>
-                        <li class="submenu-item ">
+                        <li class="submenu-item">
                             <a href="auth-register.html">Register</a>
                         </li>
-                        <li class="submenu-item ">
+                        <li class="submenu-item">
                             <a href="auth-forgot-password.html">Forgot Password</a>
                         </li>
                     </ul>
                 </li>
-
-                <li class="sidebar-item  has-sub">
-                    <a href="#" class='sidebar-link'>
-                        <i class="bi bi-x-octagon-fill"></i>
-                        <span>Errors</span>
-                    </a>
-                    <ul class="submenu ">
-                        <li class="submenu-item ">
-                            <a href="error-403.html">403</a>
-                        </li>
-                        <li class="submenu-item ">
-                            <a href="error-404.html">404</a>
-                        </li>
-                        <li class="submenu-item ">
-                            <a href="error-500.html">500</a>
-                        </li>
-                    </ul>
-                </li>
-
-
             </ul>
         </div>
         <button class="sidebar-toggler btn x"><i data-feather="x"></i></button>
