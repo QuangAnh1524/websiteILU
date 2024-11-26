@@ -27,12 +27,12 @@
                         <i class="bi bi-box"></i>
                         <span>Quản lý Sản phẩm</span>
                     </a>
-                    <ul class="submenu" style="{{ Request::routeIs('products.*') ? 'display: block;' : '' }}">
+                    <ul class="submenu text-nowrap" style="{{ Request::routeIs('products.*') ? 'display: block;' : '' }}">
                         <li class="submenu-item {{ Request::routeIs('products.index') ? 'active' : '' }}">
                             <a href="{{ route('products.index') }}">Danh sách sản phẩm</a>
                         </li>
-                        <li class="submenu-item {{ Request::url() == url('add-product.html') ? 'active' : '' }}">
-                            <a href="add-product.html">Thêm sản phẩm</a>
+                        <li class="submenu-item {{ Request::routeIs('products.create') ? 'active' : '' }}">
+                            <a href="{{route('products.create')}}">Thêm sản phẩm</a>
                         </li>
                         <li class="submenu-item {{ Request::url() == url('categories.html') ? 'active' : '' }}">
                             <a href="categories.html">Danh mục</a>
@@ -47,7 +47,7 @@
                         <span>Quản lý Nhân Viên</span>
                     </a>
                     <ul class="submenu">
-                        <li class="submenu-item {{ Request::url() == url('employee-list.html') ? 'active' : '' }}">
+                        <li class="submenu-item text-nowrap {{ Request::url() == url('employee-list.html') ? 'active' : '' }}">
                             <a href="employee-list.html">Danh sách nhân viên</a>
                         </li>
                         <li class="submenu-item {{ Request::url() == url('employee-create.html') ? 'active' : '' }}">

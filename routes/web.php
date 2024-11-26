@@ -27,6 +27,8 @@ Route::get('/websiteClient', function () {
 
 Route::resource('/products', \App\Http\Controllers\Admin\Product::class);
 
+Route::get('/products/{id}', [ProductController::class, 'show'])->name('admin.products.show');
+
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
