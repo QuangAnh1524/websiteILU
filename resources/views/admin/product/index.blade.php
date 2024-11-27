@@ -5,9 +5,13 @@
         <div class="row" id="table-hover-row">
             <div class="col-12">
                 <div class="card">
-
-                    <div class="card-header">
+                    <div class="card-header d-flex justify-content-between align-items-center">
                         <h1 class="card-title">Danh sách sản phẩm</h1>
+                        <form method="GET" action="{{ route('products.index') }}" class="d-flex">
+                            <input type="text" name="search" class="form-control me-2" placeholder="Tìm kiếm sản phẩm"
+                                   value="{{ request()->get('search') }}">
+                            <button type="submit" class="btn btn-primary">Tìm</button>
+                        </form>
                     </div>
 
                     <div class="table-responsive">
@@ -32,7 +36,8 @@
                                     <td>{{$product->sale}}</td>
                                     <td>
                                         <div>
-                                            <a href="{{ route('admin.products.show', $product->id) }}"
+                                            <a href="{{ route('admin.products.show', ['id' => $product->id, 'page' =>
+                                                        request()->get('page')]) }}"
                                                class="btn btn-outline-primary">Chi tiết</a>
                                         </div>
                                     </td>
@@ -45,7 +50,5 @@
                 </div>
             </div>
         </div>
-        </div>
     </section>
-
 @endsection

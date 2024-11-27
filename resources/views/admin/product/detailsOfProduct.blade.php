@@ -48,9 +48,11 @@
                                 <td>
                                     <a href="{{route('admin.products.edit', $product->id)}}"
                                        class="btn btn-outline-primary">Chỉnh sửa</a>
-                                    <a href="{{route('admin.products.confirmDestroy', $product->id)}}"
-                                        class="btn btn-outline-danger">Xóa</a>
-                                    <a href="/products" class="btn btn-outline-secondary">Quay lại</a>
+                                    <a href="{{route('admin.products.confirmDestroy', ['id' => $product->id, 'page' =>
+                                                request()->get('page')])}}"
+                                       class="btn btn-outline-danger">Xóa</a>
+                                    <a href="{{ route('products.index', ['page' => request()->get('page')]) }}"
+                                       class="btn btn-outline-secondary">Quay lại</a>
                                 </td>
                             </tr>
                             </tbody>

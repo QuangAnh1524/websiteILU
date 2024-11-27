@@ -12,9 +12,14 @@ class Product extends Controller
      */
     public function index()
     {
-        $products = \App\Models\Product::paginate(10);
+        $query = \App\Models\Product::query();
+        if ($key = request()->search) {
+            $query->where('name', 'like', '%' . $key . '%');
+        }
+        $products = $query->paginate(10);
         return view('admin.product.index', compact('products'));
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -29,7 +34,6 @@ class Product extends Controller
      */
     public function store(Request $request)
     {
-        // Validate dữ liệu
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string|max:1000',
@@ -37,7 +41,6 @@ class Product extends Controller
             'price' => 'required|numeric|min:0',
         ]);
 
-        // Tạo mới sản phẩm
         $product = new \App\Models\Product();
         $product->name = $request->input('name');
         $product->description = $request->input('description');
@@ -57,11 +60,9 @@ class Product extends Controller
     /**
      * Display the specified resource.
      */
-
     public function show(string $id)
     {
         $product = \App\Models\Product::findOrFail($id);
-
         return view('admin.product.detailsOfProduct', compact('product'));
     }
 
@@ -101,22 +102,29 @@ class Product extends Controller
             $updateData['image_path'] = $generatedImageName;
         }
         \App\Models\Product::where('id', $id)->update($updateData);
-        return view('admin.product.detailsOfProduct', compact('product'));
+
+        $page = $request->input('page', 1);
+        return redirect()->route('products.show', $id)->with('success', 'Cập nhật thành công')->with('page', $page);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-
-    public function confirmDestroy(string $id)
+    public function confirmDestroy(Request $request, string $id)
     {
         $product = \App\Models\Product::find($id);
-        return view('admin.product.confirmDelete', compact('product'));
+        $page = $request->get('page', 1);
+        return view('admin.product.confirmDelete', compact('product', 'page'));
     }
-    public function destroy(string $id)
+
+    public function destroy(Request $request, string $id)
     {
         $product = \App\Models\Product::find($id);
         $product->delete();
-        return redirect('/products');
+
+        $page = $request->input('page', 1);
+        return redirect()->route('products.index', ['page' => $page])->with('success', 'Sản phẩm đã được xóa');
     }
+
 }
+
