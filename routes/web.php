@@ -27,7 +27,11 @@ Route::get('/websiteClient', function () {
 
 Route::resource('/products', \App\Http\Controllers\Admin\Product::class);
 
-Route::get('/products/{id}', [ProductController::class, 'show'])->name('admin.products.show');
+Route::get('/products/{id}', [\App\Http\Controllers\Admin\Product::class, 'show'])->name('admin.products.show');
+Route::get('/products/{id}/edit', [\App\Http\Controllers\Admin\Product::class, 'edit'])->name('admin.products.edit');
+
+Route::get('/products/{id}/confirmDelete', [\App\Http\Controllers\Admin\Product::class, 'confirmDestroy'])
+    ->name('admin.products.confirmDestroy');
 
 Auth::routes();
 

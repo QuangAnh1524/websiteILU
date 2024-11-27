@@ -8,7 +8,6 @@
                     <div class="card-header">
                         <h1 class="card-title">Chi tiết "{{$product->name}}"</h1>
                     </div>
-
                     <div class="table-responsive">
                         <table class="table table-hover mb-0">
                             <tbody>
@@ -26,7 +25,7 @@
                                     @if($product->image_path)
                                         <img src="{{ asset('images/'.$product->image_path) }}"
                                              alt="{{ $product->name }}"
-                                             style="max-width: 200px; height: auto;">
+                                             style="max-width: 500px; height: auto;">
                                     @else
                                         Chưa có ảnh
                                     @endif
@@ -47,8 +46,11 @@
                             <tr>
                                 <th>Hành động</th>
                                 <td>
-                                    <a class="btn btn-outline-primary">Chỉnh sửa</a>
-                                    <a  class="btn btn-outline-secondary">Quay lại</a>
+                                    <a href="{{route('admin.products.edit', $product->id)}}"
+                                       class="btn btn-outline-primary">Chỉnh sửa</a>
+                                    <a href="{{route('admin.products.confirmDestroy', $product->id)}}"
+                                        class="btn btn-outline-danger">Xóa</a>
+                                    <a href="/products" class="btn btn-outline-secondary">Quay lại</a>
                                 </td>
                             </tr>
                             </tbody>
