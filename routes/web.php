@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\CategoryController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -32,6 +33,9 @@ Route::get('/products/{id}/edit', [\App\Http\Controllers\Admin\Product::class, '
 
 Route::get('/products/{id}/confirmDelete', [\App\Http\Controllers\Admin\Product::class, 'confirmDestroy'])
     ->name('admin.products.confirmDestroy');
+
+Route::get('products/categories/{id}', [\App\Http\Controllers\Admin\Product::class, 'show'])->name('admin.categories.show');
+Route::resource('categories', CategoryController::class);
 
 Auth::routes();
 

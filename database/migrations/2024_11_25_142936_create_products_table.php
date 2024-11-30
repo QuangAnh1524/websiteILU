@@ -17,6 +17,7 @@ return new class extends Migration
             $table->text('description');
             $table->smallInteger('sale');
             $table->float('price');
+            $table->string('image_path')->nullable();
             $table->timestamps();
 
         });

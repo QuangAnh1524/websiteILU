@@ -27,15 +27,15 @@
                         <i class="bi bi-box"></i>
                         <span>Quản lý Sản phẩm</span>
                     </a>
-                    <ul class="submenu text-nowrap" style="{{ Request::routeIs('products.*') ? 'display: block;' : '' }}">
+                    <ul class="submenu text-nowrap" style="{{ Request::routeIs('products.*', 'categories.*') ? 'display: block;' : '' }}">
                         <li class="submenu-item {{ Request::routeIs('products.index') ? 'active' : '' }}">
                             <a href="{{ route('products.index') }}">Danh sách sản phẩm</a>
                         </li>
                         <li class="submenu-item {{ Request::routeIs('products.create') ? 'active' : '' }}">
                             <a href="{{route('products.create')}}">Thêm sản phẩm</a>
                         </li>
-                        <li class="submenu-item {{ Request::url() == url('categories.html') ? 'active' : '' }}">
-                            <a href="categories.html">Danh mục</a>
+                        <li class="submenu-item {{ Request::routeIs('categories.index') ? 'active' : '' }}">
+                            <a href="{{route('categories.index')}}">Danh mục</a>
                         </li>
                     </ul>
                 </li>

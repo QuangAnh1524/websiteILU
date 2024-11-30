@@ -13,8 +13,16 @@ class Product extends Controller
     public function index()
     {
         $query = \App\Models\Product::query();
+        //tim kiem
         if ($key = request()->search) {
-            $query->where('name', 'like', '%' . $key . '%');
+            $query->where('name', 'like', '%' . $key . '%')->orWhere('description',
+                'like', '%' . $key . '%');
+        }
+        // loc
+        if ($categoryId = request()->category_id) {
+            $query->whereHas('categories', function ($q) use ($categoryId) {
+                $q->where('id', $categoryId);
+            });
         }
         $products = $query->paginate(10);
         return view('admin.product.index', compact('products'));
@@ -26,7 +34,8 @@ class Product extends Controller
      */
     public function create()
     {
-        return view('admin.product.create');
+        $categories = \App\Models\Category::all();
+        return view('admin.product.create', compact('categories'));
     }
 
     /**
@@ -53,6 +62,7 @@ class Product extends Controller
             $product->image_path = $generatedImageName;
         }
         $product->save();
+        $product->categories()->sync($request->input('categories'));
 
         return redirect()->route('products.create')->with('message', 'Thêm sản phẩm thành công!');
     }
@@ -62,16 +72,18 @@ class Product extends Controller
      */
     public function show(string $id)
     {
-        $product = \App\Models\Product::findOrFail($id);
+        $product = \App\Models\Product::with('categories')->findOrFail($id);
         return view('admin.product.detailsOfProduct', compact('product'));
     }
+
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Request $request, string $id)
     {
         $product = \App\Models\Product::find($id);
+        $page = $request->get('page', 1);
         return view('admin.product.edit', compact('product'));
     }
 
@@ -104,7 +116,8 @@ class Product extends Controller
         \App\Models\Product::where('id', $id)->update($updateData);
 
         $page = $request->input('page', 1);
-        return redirect()->route('products.show', $id)->with('success', 'Cập nhật thành công')->with('page', $page);
+        return redirect()->route('admin.products.show', ['id' => $id, 'page' => $page])
+            ->with('success', 'Cập nhật sản phẩm thành công!');
     }
 
     /**
