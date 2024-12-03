@@ -45,7 +45,14 @@ Route::get('/product-details/{id}', [\App\Http\Controllers\Client\ProductControl
     ->name('client.product.show');
 
 Route::resource('coupons', CouponController::class);
+Route::get('/coupons/{id}/confirmDelete', [CouponController::class, 'confirmDestroy'])
+    ->name('coupons.confirmDestroy');
 
-//Auth::routes();
+Route::middleware('auth')->group(function () {
+    Route::post('add-to-cart', [\App\Http\Controllers\Client\CartController::class, 'store'])->name('client.carts.add');
+    Route::get('carts', [\App\Http\Controllers\Client\CartController::class, 'index'])->name('client.carts.index');
+});
+
+Auth::routes();
 
 Route::get('/home', [\App\Http\Controllers\Client\HomeController::class, 'index'])->name('home');

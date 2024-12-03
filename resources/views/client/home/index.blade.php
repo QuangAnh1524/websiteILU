@@ -49,8 +49,6 @@
 
                         </div>
 
-
-
                         <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
                             <h6 class="text-truncate mb-3">{{ $item->name }}</h6>
                             <div class="d-flex justify-content-center">
@@ -60,8 +58,7 @@
                         </div>
                         <div class="card-footer d-flex justify-content-between bg-light border">
                             <a href="{{route('client.product.show', $item->id)}}" class="btn btn-sm text-dark p-0"><i
-                                    class="fas fa-eye text-primary mr-1"></i>View
-                                Detail</a>
+                                    class="fas fa-eye text-primary mr-1"></i>View Detail</a>
 
                         </div>
                     </div>

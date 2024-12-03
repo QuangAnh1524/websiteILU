@@ -16,7 +16,7 @@
 
     <!-- Shop Detail Start -->
     <div class="container-fluid py-5">
-        <form action="" method="POST" class="row px-xl-5">
+        <form action="{{route('client.carts.add')}}" method="POST" class="row px-xl-5">
             @csrf
             <input type="hidden" name="product_id" value="{{ $product->id }}">
             <div class="col-lg-5 pb-5">
@@ -47,22 +47,23 @@
 
 
                 <div class="d-flex mb-4">
-                    <p class="text-dark font-weight-medium mb-0 mr-3">Size:</p>
-                    @if ($product->details->count() > 0)
-                        <form>
-                            @foreach ($product->details as $size)
-                                <div class="custom-control custom-radio custom-control-inline">
-                                    <input type="radio" class="custom-control-input" name="product_size"
-                                           value="{{ $size->size }}" id="size{{ $size->size }}">
-                                    <label for="size{{ $size->size }}"
-                                           class="
-                                        custom-control-label">{{ $size->size }}</label>
-                                </div>
-                            @endforeach
-                        </form>
-                    @else
-                        <p>Hết hàng</p>
-                    @endif
+                    <p class="text-dark font-weight-medium mb-0 mr-3">Description :</p>
+                    {!! $product->description !!}
+{{--                    @if ($product->details->count() > 0)--}}
+{{--                        <form>--}}
+{{--                            @foreach ($product->details as $size)--}}
+{{--                                <div class="custom-control custom-radio custom-control-inline">--}}
+{{--                                    <input type="radio" class="custom-control-input" name="product_size"--}}
+{{--                                           value="{{ $size->size }}" id="size{{ $size->size }}">--}}
+{{--                                    <label for="size{{ $size->size }}"--}}
+{{--                                           class="--}}
+{{--                                        custom-control-label">{{ $size->size }}</label>--}}
+{{--                                </div>--}}
+{{--                            @endforeach--}}
+{{--                        </form>--}}
+{{--                    @else--}}
+{{--                        <p>Hết hàng</p>--}}
+{{--                    @endif--}}
 
                 </div>
 

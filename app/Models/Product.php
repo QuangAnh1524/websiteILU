@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -36,5 +37,15 @@ class Product extends Model
     {
         return $this->hasMany(ProductDetails::class);
     }
+
+    public function salePrice() : Attribute
+    {
+        return Attribute::make(
+            get: fn() => $this->attributes['sale']
+                ? $this->attributes['price'] - ($this->attributes['sale'] * 0.01  * $this->attributes['price'])
+                : 0
+        );
+    }
+
 
 }

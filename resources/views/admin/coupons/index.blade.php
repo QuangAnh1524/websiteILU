@@ -48,7 +48,8 @@
                                     </td>
                                     <td>
                                         <div>
-                                            <a href=""
+                                            <a href="{{route('coupons.confirmDestroy', ['id' => $item->id, 'page' =>
+                                                request()->get('page')]) }}"
                                                 class="btn btn-outline-danger">Xóa</a>
                                         </div>
                                     </td>

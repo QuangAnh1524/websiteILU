@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Coupons\CreateCouponRequest;
 use App\Http\Requests\Coupons\UpdateCouponRequest;
+use App\Models\Category;
 use App\Models\Coupon;
 use Illuminate\Http\Request;
 
@@ -76,8 +77,17 @@ class CouponController extends Controller
     /**
      * Remove the specified resource from storage.
      */
+    public function confirmDestroy(string $id) {
+        $coupon = $this->coupon->findOrFail($id);
+        $page = \request()->input('page', 1);
+        return view('admin.coupons.confirmDelete', compact('coupon', 'page'));
+    }
+
     public function destroy(string $id)
     {
-        //
+        $coupon = $this->coupon->findOrFail($id);
+        $coupon->delete();
+        $page = \request()->input('page', 1);
+        return redirect()->route('coupons.index', compact('page'))->with('message', 'delete success!');
     }
 }
