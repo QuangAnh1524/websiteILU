@@ -17,7 +17,10 @@ class CouponFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'name' => 'COUPON'.$this->faker->randomNumber(),
+            'type' => 'money',
+            'value' => 20,
+            'expiry_date' =>$this->faker->date(),
         ];
     }
 }

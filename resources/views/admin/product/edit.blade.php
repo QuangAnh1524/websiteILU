@@ -49,6 +49,19 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="col-md-6 col-12">
+                                        <div class="form-group">
+                                            <label for="categories">Categories</label>
+                                            <select name="categories[]" id="categories" class="form-control" multiple>
+                                                @foreach($categories as $category)
+                                                    <option value="{{ $category->id }}"
+                                                        {{ in_array($category->id, $product->categories->pluck('id')->toArray()) ? 'selected' : '' }}>
+                                                        {{ $category->name }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
                                     <div class="mb-3">
                                         <label class="form-label">Current Image</label>
                                         @if($product->image_path)

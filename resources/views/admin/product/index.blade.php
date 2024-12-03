@@ -5,35 +5,70 @@
         <div class="row" id="table-hover-row">
             <div class="col-12">
                 <div class="card">
-                    <div class="card-header d-flex justify-content-between align-items-center">
-                        <div class="row">
+                    <div class="card-header">
+                        <div class="row mb-3">
                             <div class="col-md-5">
                                 <h1 class="card-title">Danh sách sản phẩm</h1>
                             </div>
                             <div class="col-md-7">
                                 <form action="{{ route('products.index') }}" method="GET">
-                                    <div class="row g-6">
-                                        <div class="col-md-8">
+                                    <div class="row g-2">
+                                        <div class="col-md-6">
                                             <select name="category" class="form-select">
-                                                <option value="" selected>-- Chọn danh mục sản phẩm --</option>
-                                                <option value="ao-nam" {{ request()->get('category') == 'ao-nam' ? 'selected' : '' }}>Áo nam</option>
-                                                <option value="ao-nu" {{ request()->get('category') == 'ao-nu' ? 'selected' : '' }}>Áo nữ</option>
-                                                <option value="quan-nam" {{ request()->get('category') == 'quan-nam' ? 'selected' : '' }}>Quần nam</option>
-                                                <option value="quan-nu" {{ request()->get('category') == 'quan-nu' ? 'selected' : '' }}>Quần nữ</option>
+                                                <option value="" {{ request()->get('category') == '' ? 'selected' : '' }}>
+                                                    -- Chọn danh mục sản phẩm --
+                                                </option>
+                                                @foreach($categories as $category)
+                                                    <option value="{{ $category->slug }}"
+                                                        {{ request()->get('category') == $category->slug ? 'selected' : '' }}>
+                                                        {{ $category->name }}
+                                                    </option>
+                                                @endforeach
                                             </select>
                                         </div>
-                                        <div class="col-md-4">
-                                            <button type="submit" class="btn btn-primary w-100">Lọc</button>
+                                        <div class="col-md-3">
+                                            <select name="sort_by" class="form-select">
+                                                <option value="id" {{ request()->get('sort_by') == 'id' ? 'selected' : '' }}>Mặc định</option>
+                                                <option value="name" {{ request()->get('sort_by') == 'name' ? 'selected' : '' }}>Tên</option>
+                                                <option value="price" {{ request()->get('sort_by') == 'price' ? 'selected' : '' }}>Giá</option>
+                                                <option value="created_at" {{ request()->get('sort_by') == 'created_at' ? 'selected' : '' }}>Ngày tạo</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <select name="sort_direction" class="form-select">
+                                                <option value="asc" {{ request()->get('sort_direction') == 'asc' ? 'selected' : '' }}>Tăng dần</option>
+                                                <option value="desc" {{ request()->get('sort_direction') == 'desc' ? 'selected' : '' }}>Giảm dần</option>
+                                            </select>
                                         </div>
                                     </div>
+
+                                    <div class="row mt-2">
+                                        <div class="col-md-9">
+                                            <div class="input-group">
+                                                <input type="text" name="search" class="form-control"
+                                                       placeholder="Tìm kiếm sản phẩm"
+                                                       value="{{ request()->get('search') }}">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <select name="per_page" class="form-select">
+                                                <option value="5" {{ request()->get('per_page') == 5 ? 'selected' : '' }}>5 sản phẩm</option>
+                                                <option value="10" {{ request()->get('per_page') == 10 ? 'selected' : '' }}>10 sản phẩm</option>
+                                                <option value="15" {{ request()->get('per_page') == 15 ? 'selected' : '' }}>15 sản phẩm</option>
+                                                <option value="0" {{ request()->get('per_page') == 20 ? 'selected' : '' }}>20 sản phẩm</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mt-2">
+                                        <div class="col-12 text-end">
+                                            <button type="submit" class="btn btn-primary">Áp dụng bộ lọc</button>
+                                        </div>
+                                    </div>
+
                                 </form>
                             </div>
                         </div>
-                        <form method="GET" action="{{ route('products.index') }}" class="d-flex">
-                            <input type="text" name="search" class="form-control me-2" placeholder="Tìm kiếm sản phẩm"
-                                   value="{{ request()->get('search') }}">
-                            <button type="submit" class="btn btn-primary">Tìm</button>
-                        </form>
                     </div>
 
                     <div class="table-responsive">
@@ -58,8 +93,7 @@
                                     <td>{{$product->sale}}</td>
                                     <td>
                                         <div>
-                                            <a href="{{ route('admin.products.show', ['id' => $product->id, 'page' =>
-                                                        request()->get('page')]) }}"
+                                            <a href="{{ route('admin.products.show', ['id' => $product->id, 'page' => request()->get('page')]) }}"
                                                class="btn btn-outline-primary">Chi tiết</a>
                                         </div>
                                     </td>

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\CouponController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,17 +15,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+use App\Http\Controllers\Client\HomeController;
+
+Route::get('/', [HomeController::class, 'index'])->name('client.home.index');
+
 
 Route::get('/adminDashboard', function () {
     return view('admin.adminDashboard');
 })->name('adminDashboard');
 
-Route::get('/websiteClient', function () {
-    return view('client.layouts.app');
-});
 
 Route::resource('/products', \App\Http\Controllers\Admin\Product::class);
 
@@ -37,6 +36,16 @@ Route::get('/products/{id}/confirmDelete', [\App\Http\Controllers\Admin\Product:
 Route::get('products/categories/{id}', [\App\Http\Controllers\Admin\Product::class, 'show'])->name('admin.categories.show');
 Route::resource('categories', CategoryController::class);
 
-Auth::routes();
+Route::get('/categories/{id}/confirmDelete', [CategoryController::class, 'confirmDestroy'])
+    ->name('categories.confirmDestroy');
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('product/{categoryID}', [\App\Http\Controllers\Client\ProductController::class, 'index'])
+    ->name('client.product.index');
+Route::get('/product-details/{id}', [\App\Http\Controllers\Client\ProductController::class, 'show'])
+    ->name('client.product.show');
+
+Route::resource('coupons', CouponController::class);
+
+//Auth::routes();
+
+Route::get('/home', [\App\Http\Controllers\Client\HomeController::class, 'index'])->name('home');

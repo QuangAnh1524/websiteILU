@@ -26,5 +26,7 @@ class Category extends Model
         return optional($this->parent)->name;
     }
 
-
+    public function getParent() {
+        return Category::whereNull('parent_id')->with('children')->get(['id', 'name']);
+    }
 }

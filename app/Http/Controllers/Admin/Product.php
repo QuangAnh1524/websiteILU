@@ -4,29 +4,43 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\NotFoundExceptionInterface;
 
 class Product extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         $query = \App\Models\Product::query();
         //tim kiem
-        if ($key = request()->search) {
-            $query->where('name', 'like', '%' . $key . '%')->orWhere('description',
-                'like', '%' . $key . '%');
-        }
-        // loc
-        if ($categoryId = request()->category_id) {
-            $query->whereHas('categories', function ($q) use ($categoryId) {
-                $q->where('id', $categoryId);
+        if ($searchKey = request()->get('search')) {
+            $query->where(function($q) use ($searchKey) {
+                $q->where('name', 'like', '%' . $searchKey . '%')
+                    ->orWhere('description', 'like', '%' . $searchKey . '%');
             });
         }
-        $products = $query->paginate(10);
-        return view('admin.product.index', compact('products'));
+
+//        // loc
+//        $query->whereHas('categories', function($q) use ($request) {
+//            $q->where('categories.id', $request->category); // Sử dụng ID của danh mục
+//        });
+
+        // sap xep
+        $sortBy = $request->get('sort_by', 'id');
+        $sortDirection = $request->get('sort_direction', 'asc');
+        $query->orderBy($sortBy, $sortDirection);
+
+        $perPage = request()->get('per_page', 10);
+
+        $products = $query->paginate($perPage)->withQueryString();
+        $categories = \App\Models\Category::all();
+
+        return view('admin.product.index', compact('products', 'categories'));
     }
+
 
 
     /**
@@ -84,7 +98,8 @@ class Product extends Controller
     {
         $product = \App\Models\Product::find($id);
         $page = $request->get('page', 1);
-        return view('admin.product.edit', compact('product'));
+        $categories = \App\Models\Category::whereNotNull('parent_id')->get();
+        return view('admin.product.edit', compact('product', 'page', 'categories'));
     }
 
     /**
@@ -100,6 +115,7 @@ class Product extends Controller
             'price' => $request->input('price'),
         ];
         if ($request->hasFile('image_path')) {
+            // Xử lý hình ảnh nếu có thay đổi
             if ($product->image_path) {
                 $oldImagePath = public_path('images/' . $product->image_path);
                 if (file_exists($oldImagePath)) {
@@ -113,12 +129,18 @@ class Product extends Controller
 
             $updateData['image_path'] = $generatedImageName;
         }
-        \App\Models\Product::where('id', $id)->update($updateData);
+
+        // Cập nhật thông tin sản phẩm
+        $product->update($updateData);
+
+        // Cập nhật mối quan hệ giữa sản phẩm và danh mục
+        $product->categories()->sync($request->input('categories'));  // Đồng bộ danh mục
 
         $page = $request->input('page', 1);
         return redirect()->route('admin.products.show', ['id' => $id, 'page' => $page])
             ->with('success', 'Cập nhật sản phẩm thành công!');
     }
+
 
     /**
      * Remove the specified resource from storage.

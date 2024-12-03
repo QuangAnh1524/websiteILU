@@ -79,26 +79,25 @@
                 </li>
 
                 <!-- Quản lý Khuyến mãi -->
-                <li class="sidebar-item has-sub {{ Request::url() == url('promotion-list.html') ? 'active' : '' }}">
+                <li class="sidebar-item has-sub {{ Request::routeIs('coupons.*') ? 'active' : '' }}">
                     <a href="#" class='sidebar-link'>
                         <i class="bi bi-percent"></i>
                         <span>Quản lý Khuyến mãi</span>
                     </a>
-                    <ul class="submenu">
-                        <li class="submenu-item {{ Request::url() == url('promotion-list.html') ? 'active' : '' }}">
-                            <a href="promotion-list.html">Danh sách khuyến mãi</a>
+                    <ul class="submenu text-nowrap" style="{{ Request::routeIs('coupons.*') ? 'display: block;' : '' }}">
+                        <li class="submenu-item {{ Request::routeIs('coupons.index') ? 'active' : '' }}">
+                            <a href="{{ route('coupons.index') }}">Danh sách khuyến mãi</a>
                         </li>
-                        <li class="submenu-item {{ Request::url() == url('promotion-create.html') ? 'active' : '' }}">
-                            <a href="promotion-create.html">Thêm khuyến mãi</a>
+                        <li class="submenu-item {{ Request::routeIs('coupons.create') ? 'active' : '' }}">
+                            <a href="{{ route('coupons.create') }}">Thêm khuyến mãi</a>
                         </li>
-                        <li class="submenu-item {{ Request::url() == url('promotion-edit.html') ? 'active' : '' }}">
-                            <a href="promotion-edit.html">Chỉnh sửa khuyến mãi</a>
-                        </li>
-                        <li class="submenu-item {{ Request::url() == url('promotion-delete.html') ? 'active' : '' }}">
-                            <a href="promotion-delete.html">Cập nhật trạng thái khuyến mãi</a>
+
+                        <li class="submenu-item {{ Request::routeIs('coupons.update-status') ? 'active' : '' }}">
+                            <a href="">Cập nhật trạng thái</a>
                         </li>
                     </ul>
                 </li>
+
 
                 <!-- Báo cáo -->
                 <li class="sidebar-item {{ Request::url() == url('reports.html') ? 'active' : '' }}">

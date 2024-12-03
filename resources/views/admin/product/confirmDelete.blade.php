@@ -1,5 +1,5 @@
 @extends('admin.layouts.app')
-@section('title', 'Chi tiết Sản phẩm')
+@section('title', '')
 @section('content')
     <h3>Chắc chắn muốn xóa sản phẩm "{{$product->name}}"?</h3>
     <form action="{{ url('products/'.$product->id) }}" method="POST">
